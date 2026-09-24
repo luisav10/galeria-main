@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GALERIA // ROBÓTICA & INFORMÁTICA</title>
+  
+  <!-- Fontes Tech (JetBrains Mono & Inter) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --card-bg: #ffffff;
+      --border-color: #e2e8f0;
+      --border-hover: #000000;
+      --text-dark: #000000;
+      --text-muted: #64748b;
+      --badge-bg: #f8fafc;
+      --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.05);
+      --shadow-hover: 0 14px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-dark);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      padding: 40px 20px;
+      /* Grid sutil preto/cinza sobre fundo branco */
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 0.03) 0%, transparent 70%),
+        linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+      background-size: 100% 100%, 32px 32px, 32px 32px;
+    }
+
+    .header {
+      text-align: center;
+      max-width: 1200px;
+      margin: 0 auto 40px auto;
+    }
+
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 20px;
+      background: var(--badge-bg);
+      border: 1px solid #e2e8f0;
+      color: #000000;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .header-badge .dot {
+      width: 8px;
+      height: 8px;
+      background-color: #000000;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.85); }
+    }
+
+    .header h1 {
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .header p {
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .gallery-container {
+      max-width: 1150px;
+      margin: 0 auto;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 200px;
+      gap: 16px;
+    }
+
+    /* Quadradinhos com Fundo Branco Limpo */
+    .item {
+      position: relative;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
+      display: flex;
+    }
+
+    /* Hover nos blocos */
+    .item:hover {
+      border-color: var(--border-hover);
+      box-shadow: var(--shadow-hover);
+      z-index: 10;
+    }
+
+    /* Container interno das fotos */
+    .photo-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* SUPER ZOOM DA FOTO */
+    .item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.4s ease;
+    }
+
+    .item:hover img {
+      transform: scale(1.4); /* Efeito de Super Zoom estendido */
+      filter: brightness(1.02);
+    }
+
+    .photo-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      transition: background 0.3s ease;
+    }
+
+    .photo-placeholder svg {
+      width: 32px;
+      height: 32px;
+      stroke: #000000;
+      opacity: 0.25;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .item:hover .photo-placeholder svg {
+      opacity: 0.85;
+      transform: scale(1.1);
+    }
+
+    /* Oculta placeholder quando a tag <img> possui um src preenchido */
+    .item img[src=""], 
+    .item img:not([src]) {
+      display: none;
+    }
+
+    .item img[src]:not([src=""]) + .photo-placeholder {
+      display: none;
+    }
+
+    .block-1  { grid-column: 1 / span 2; grid-row: 1 / span 2; } /* Destaque Grande (2x2) */
+    .block-2  { grid-column: 3 / span 1; grid-row: 1 / span 2; } /* Vertical Alto (1x2) */
+    .block-3  { grid-column: 4 / span 1; grid-row: 1 / span 1; } /* Quadrado (1x1) */
+    .block-4  { grid-column: 4 / span 1; grid-row: 2 / span 1; } /* Quadrado (1x1) */
+
+    .block-5  { grid-column: 1 / span 1; grid-row: 3 / span 1; } /* Quadrado (1x1) */
+    .block-6  { grid-column: 2 / span 2; grid-row: 3 / span 1; } /* Horizontal Largo (2x1) */
+    .block-7  { grid-column: 4 / span 1; grid-row: 3 / span 2; } /* Vertical Alto (1x2) */
+
+    .block-8  { grid-column: 1 / span 1; grid-row: 4 / span 1; } /* Quadrado (1x1) */
+    .block-9  { grid-column: 2 / span 1; grid-row: 4 / span 1; } /* Quadrado (1x1) */
+    .block-10 { grid-column: 3 / span 1; grid-row: 4 / span 1; } /* Quadrado (1x1) */
+
+    .lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 20px;
+    }
+
+    .lightbox.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 85vh;
+      border: 1px solid #000000;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+      background: #ffffff;
+    }
+
+    .lightbox-content img {
+      max-width: 100%;
+      max-height: 85vh;
+      display: block;
+      object-fit: contain;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: #000000;
+      border: 1px solid #000000;
+      color: #ffffff;
+      font-size: 1.4rem;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      z-index: 1001;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .lightbox-close:hover {
+      background: #ffffff;
+      color: #000000;
+    }
+
+    @media (max-width: 850px) {
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 180px;
+      }
+
+      .block-1, .block-2, .block-3, .block-4, 
+      .block-5, .block-6, .block-7, .block-8, 
+      .block-9, .block-10 {
+        grid-column: auto / span 1;
+        grid-row: auto / span 1;
+      }
+
+      .block-1, .block-6 {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .block-1, .block-6 {
+        grid-column: span 1;
+      }
+      
+      .header h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-badge">
+      <span class="dot"></span>
+      SYSTEM ONLINE
+    </div>
+    <h1>GALERIA</h1>
+    <p>ROBÓTICA & INFORMÁTICA</p>
+  </header>
+
+  <main class="gallery-container">
+    <section class="gallery-grid">
+      
+      <!-- BLOCO 1 (Destaque Grande 2x2) -->
+      <article class="item block-1" onclick="openLightbox(this)">
+        <div class="photo-wrapper">
+          <!-- INSIRA O LINK OU CAMINHO DA FOTO 1 NO 'src' ABAIXO -->
+          <img src="assets/robotica.jpeg" alt="Foto 1" />
+          <div class="photo-placeholder">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
+            </svg>
+          </div>
+        </div>
+      </article>
+
+      <!-- BLOCO 2 (Vertical Alto 1x2) -->
+      <article class="item block-2" onclick="openLightbox(this)">
+        <div class="photo-wrapper">
+          <!-- INSIRA O LINK OU CAMINHO DA FOTO 2 NO 'src' ABAIXO -->
+          <img src="assets/r2.jpg" alt="Foto 2" />
+          <div class="photo-placeholder">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+            </svg>
+          </div>
+        </div>
+      </article>
+
+      <!-- BLOCO 3 (Quadrado 1x1) -->
+      <article class="item block-3" onclick="openLightbox(this)">
+        <div class="photo-wrapper">
+          <!-- INSIRA O LINK OU CAMINHO DA FOTO 3 NO 'src' ABAIXO -->
+          <img src="assets/r3.jpg" alt="Foto 3" />
+          <div class="photo-placeholder">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+            </svg>
+          </div>
+        </div>
+      </article>
+
+      <!-- BLOCO 4 (Quadrado 1x1) -->
+      <article class="item block-4" onclick="openLightbox(this)">
+        <div class="photo-wrapper">
+          <!-- INSIRA O LINK OU CAMINHO DA FOTO 4 NO 'src' ABAIXO -->
+          <img src="assets/r4.jpg" alt="Foto 4" />
+          <div class="photo-placeholder">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+            </svg>
+          </div>
+        </div>
+      </article>
+
+      <!-- BLOCO 5 (Quadrado 1x1) -->
+      <article class="item block-5" onclick="openLightbox(this)">
+        <div class="photo-wrapper">
+          <!-- INSIRA O LINK OU CAMINHO DA FOTO 5 NO 'src' ABAIXO -->
+          <img src="assets/r5.jpg" alt="Foto 5" />
+          <div class="photo-placeholder">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+            </svg>
+          </div>
+        </div>
+      </article>
+
+      <!-- BLOCO 6 (Horizontal Largo 2x1) -->
+      <article class="item block-6" onclick="openLightbox(this)">
+        <div class="photo-wrapper">
+          <!-- INSIRA O LINK OU CAMINHO DA FOTO 6 NO 'src' ABAIXO -->
+          <img src="assets/r6.jpg" alt="Foto 6" />
+          <div class="photo-placeholder">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+            </svg>
+          </div>
+        </div>
+      </article>
+
+      <!-- BLOCO 7 (Vertical Alto 1x2) -->
+      <article class="item block-7" onclick="openLightbox(this)">
+        <div class="photo-wrapper">
+          <!-- INSIRA O LINK OU CAMINHO DA FOTO 7 NO 'src' ABAIXO -->
+          <img src="assets/r7.jpg" alt="Foto 7" />
+          <div class="photo-placeholder">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+            </svg>
+          </div>
+        </div>
+      </article>
+
+      <!-- BLOCO 8 (Quadrado 1x1) -->
+      <article class="item block-8" onclick="openLightbox(this)">
+        <div class="photo-wrapper">
+          <!-- INSIRA O LINK OU CAMINHO DA FOTO 8 NO 'src' ABAIXO -->
+          <img src="assets/r8.jpg" alt="Foto 8" />
+          <div class="photo-placeholder">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+            </svg>
+          </div>
+        </div>
+      </article>
+
+      <!-- BLOCO 9 (Quadrado 1x1) -->
+      <article class="item block-9" onclick="openLightbox(this)">
+        <div class="photo-wrapper">
+          <!-- INSIRA O LINK OU CAMINHO DA FOTO 9 NO 'src' ABAIXO -->
+          <img src="assets/r9.jpg" alt="Foto 9" />
+          <div class="photo-placeholder">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+            </svg>
+          </div>
+        </div>
+      </article>
+
+      <!-- BLOCO 10 (Quadrado 1x1) -->
+      <article class="item block-10" onclick="openLightbox(this)">
+        <div class="photo-wrapper">
+          <!-- INSIRA O LINK OU CAMINHO DA FOTO 10 NO 'src' ABAIXO -->
+          <img src="assets/r10.jpg" alt="Foto 10" />
+          <div class="photo-placeholder">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
+            </svg>
+          </div>
+        </div>
+      </article>
+
+    </section>
+  </main>
+
+  <!-- LIGHTBOX PARA AMPLIAR A FOTO EM TELA CHEIA -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="closeLightbox(event)">&times;</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Preview" />
+    </div>
+  </div>
+
+  <script>
+    function openLightbox(element) {
+      const img = element.querySelector('img');
+      // Abre a foto expandida caso haja imagem vinculada
+      if (img && img.src && img.src !== "" && window.getComputedStyle(img).display !== 'none') {
+        document.getElementById('lightbox-img').src = img.src;
+        document.getElementById('lightbox').classList.add('active');
+      }
+    }
+
+    function closeLightbox(event) {
+      document.getElementById('lightbox').classList.remove('active');
+    }
+
+    // Tecla ESC para fechar
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeLightbox();
+      }
+    });
+  </script>
+</body>
+</html>
