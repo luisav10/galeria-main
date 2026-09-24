@@ -8,7 +8,7 @@
   <!-- Fontes Tech (JetBrains Mono & Inter) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -153,6 +153,33 @@
     .item:hover img {
       transform: scale(1.4); /* Efeito de Super Zoom estendido */
       filter: brightness(1.02);
+    }
+
+    /* LEGENDA COM BAIXA OPACIDADE IGUAL À IMAGEM DE REFERÊNCIA */
+    .caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px 14px;
+      background: rgba(0, 0, 0, 0.42); /* Faixa escura com baixa opacidade */
+      backdrop-filter: blur(4px); /* Desfocado leve para maior legibilidade */
+      -webkit-backdrop-filter: blur(4px);
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+      z-index: 5;
+      pointer-events: none; /* Garante que o clique passe para o card */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: background 0.3s ease;
+    }
+
+    .item:hover .caption {
+      background: rgba(0, 0, 0, 0.58); /* Fica levemente mais nitido ao passar o mouse */
     }
 
     .photo-placeholder {
@@ -317,131 +344,141 @@
       <!-- BLOCO 1 (Destaque Grande 2x2) -->
       <article class="item block-1" onclick="openLightbox(this)">
         <div class="photo-wrapper">
-          <!-- INSIRA O LINK OU CAMINHO DA FOTO 1 NO 'src' ABAIXO -->
-          <img src="assets/robotica.jpeg" alt="Foto 1" />
+          <img src="assets/robotica.jpeg" alt="Projeto Principal" />
           <div class="photo-placeholder">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
               <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0ZM18.75 10.5h.008v.008h-.008V10.5Z" />
             </svg>
           </div>
+          <!-- LEGENDA AQUI -->
+          <div class="caption">Veículo seguidor de linha</div>
         </div>
       </article>
 
       <!-- BLOCO 2 (Vertical Alto 1x2) -->
       <article class="item block-2" onclick="openLightbox(this)">
         <div class="photo-wrapper">
-          <!-- INSIRA O LINK OU CAMINHO DA FOTO 2 NO 'src' ABAIXO -->
-          <img src="assets/r2.jpg" alt="Foto 2" />
+          <img src="assets/r2.jpg" alt="Robô Aéreo" />
           <div class="photo-placeholder">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
             </svg>
           </div>
+          <!-- LEGENDA AQUI -->
+          <div class="caption">Robô escova</div>
         </div>
       </article>
 
       <!-- BLOCO 3 (Quadrado 1x1) -->
       <article class="item block-3" onclick="openLightbox(this)">
         <div class="photo-wrapper">
-          <!-- INSIRA O LINK OU CAMINHO DA FOTO 3 NO 'src' ABAIXO -->
-          <img src="assets/r3.jpg" alt="Foto 3" />
+          <img src="assets/r3.jpg" alt="Circuito" />
           <div class="photo-placeholder">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
             </svg>
           </div>
+          <!-- LEGENDA AQUI -->
+          <div class="caption">Gerador de Energia Cinética</div>
         </div>
       </article>
 
       <!-- BLOCO 4 (Quadrado 1x1) -->
       <article class="item block-4" onclick="openLightbox(this)">
         <div class="photo-wrapper">
-          <!-- INSIRA O LINK OU CAMINHO DA FOTO 4 NO 'src' ABAIXO -->
-          <img src="assets/r4.jpg" alt="Foto 4" />
+          <img src="assets/r4.jpg" alt="Programação" />
           <div class="photo-placeholder">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
             </svg>
           </div>
+          <!-- LEGENDA AQUI -->
+          <div class="caption">Disco de Cores com Potenciômetro</div>
         </div>
       </article>
 
       <!-- BLOCO 5 (Quadrado 1x1) -->
       <article class="item block-5" onclick="openLightbox(this)">
         <div class="photo-wrapper">
-          <!-- INSIRA O LINK OU CAMINHO DA FOTO 5 NO 'src' ABAIXO -->
-          <img src="assets/r5.jpg" alt="Foto 5" />
+          <img src="assets/r5.jpg" alt="Automação" />
           <div class="photo-placeholder">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
             </svg>
           </div>
+          <!-- LEGENDA AQUI -->
+          <div class="caption">Chute ao Gol</div>
         </div>
       </article>
 
       <!-- BLOCO 6 (Horizontal Largo 2x1) -->
       <article class="item block-6" onclick="openLightbox(this)">
         <div class="photo-wrapper">
-          <!-- INSIRA O LINK OU CAMINHO DA FOTO 6 NO 'src' ABAIXO -->
-          <img src="assets/r6.jpg" alt="Foto 6" />
+          <img src="assets/r6.jpg" alt="Laboratório" />
           <div class="photo-placeholder">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
             </svg>
           </div>
+          <!-- LEGENDA AQUI -->
+          <div class="caption">Veículo seguidor de linha</div>
         </div>
       </article>
 
       <!-- BLOCO 7 (Vertical Alto 1x2) -->
       <article class="item block-7" onclick="openLightbox(this)">
         <div class="photo-wrapper">
-          <!-- INSIRA O LINK OU CAMINHO DA FOTO 7 NO 'src' ABAIXO -->
-          <img src="assets/r7.jpg" alt="Foto 7" />
+          <img src="assets/r7.jpg" alt="Sensores" />
           <div class="photo-placeholder">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
             </svg>
           </div>
+          <!-- LEGENDA AQUI -->
+          <div class="caption">Chute ao Gol</div>
         </div>
       </article>
 
       <!-- BLOCO 8 (Quadrado 1x1) -->
       <article class="item block-8" onclick="openLightbox(this)">
         <div class="photo-wrapper">
-          <!-- INSIRA O LINK OU CAMINHO DA FOTO 8 NO 'src' ABAIXO -->
-          <img src="assets/r8.jpg" alt="Foto 8" />
+          <img src="assets/r8.jpg" alt="Hardware" />
           <div class="photo-placeholder">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
             </svg>
           </div>
+          <!-- LEGENDA AQUI -->
+          <div class="caption">Robô escova</div>
         </div>
       </article>
 
       <!-- BLOCO 9 (Quadrado 1x1) -->
       <article class="item block-9" onclick="openLightbox(this)">
         <div class="photo-wrapper">
-          <!-- INSIRA O LINK OU CAMINHO DA FOTO 9 NO 'src' ABAIXO -->
-          <img src="assets/r9.jpg" alt="Foto 9" />
+          <img src="assets/r9.jpg" alt="Estrutura" />
           <div class="photo-placeholder">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
             </svg>
           </div>
+          <!-- LEGENDA AQUI -->
+          <div class="caption">Disco de Cores com Potenciômetro</div>
         </div>
       </article>
 
       <!-- BLOCO 10 (Quadrado 1x1) -->
       <article class="item block-10" onclick="openLightbox(this)">
         <div class="photo-wrapper">
-          <!-- INSIRA O LINK OU CAMINHO DA FOTO 10 NO 'src' ABAIXO -->
-          <img src="assets/r10.jpg" alt="Foto 10" />
+          <img src="assets/r10.jpg" alt="Interface" />
           <div class="photo-placeholder">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 0 1 5.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 0 0-1.134-.175 2.31 2.31 0 0 1-1.64-1.055l-.822-1.316a2.192 2.192 0 0 0-1.736-1.039 48.774 48.774 0 0 0-5.232 0 2.192 2.192 0 0 0-1.736 1.039l-.821 1.316Z" />
             </svg>
           </div>
+          <!-- LEGENDA AQUI -->
+          <div class="caption">Interface</div>
         </div>
       </article>
 
